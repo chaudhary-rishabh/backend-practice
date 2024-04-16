@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "practicing code for nodejs, expressjs, JWT, Middleware, Routes, ZOD, API LOGIc, and more",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaudhary-rishabh/backend-practice.git"
+  },
+  "keywords": [
+    "Ba\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[C\u001b[C\u001b[C\u001b[C\u001b",
+    "\"backend\"",
+    "\"api\"",
+    "\"jwt\"",
+    "\"auth\"",
+    "\"middleware\"",
+    "\"routes\"",
+    "\"zod\"",
+    "\"expressjs\"",
+    "\"nodejs\""
+  ],
+  "author": "Rishabh Chaudhary",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaudhary-rishabh/backend-practice/issues"
+  },
+  "homepage": "https://github.com/chaudhary-rishabh/backend-practice#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
