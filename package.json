@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "practicing code for nodejs, expressjs, JWT, Middleware, Routes, ZOD, API LOGIc, and more",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
