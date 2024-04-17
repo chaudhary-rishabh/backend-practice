@@ -9,10 +9,27 @@ dotenv.config();
 const port = process.env.PORT || 3000
 
 app.use(express.json());
+let errorCount = 0;
+let numberOfRequestsForUser = 0;
 
-const students = [];
 
-app.post("/", (req, res) =>{
+var students = [];
+setInterval(() => {
+    numberOfRequestsForUser = 0;
+}, 2000)
+
+app.use(function (req, res, next) {
+	numberOfRequestsForUser += 1;
+	console.log(numberOfRequestsForUser);
+	if (numberOfRequestsForUser > 5) {
+		res.status(404).send("Request timed out. Please try again later.");
+	} else {
+		next();
+	}
+})
+
+app.post("/", (req, res) => {
+	throw new Error("not valid details");
 	const newStudents = req.body;
 	students.push(newStudents);
 	res.status(201).send("successfully added new students");
@@ -41,11 +58,15 @@ app.put("/students/:id", function(req, res){
 	res.send("New Students list after updating students:- "+ JSON.stringify(students));
 })
 
-app.use((err, req, res, next)=>{
-	res.status(400).send("Error Occured while calling api");
+app.use(function (err, req, res, next) {
+	errorCount += 1
+	if (errorCount > 10) {
+		console.log(errorCount+" errors till now")
+	}
+	res.status(404).json({ msg: err.message });
 })
 
-app.listen(3000, function(){
+app.listen(port, function(){
 	console.log("server started on port number: "+port);
 })
 
