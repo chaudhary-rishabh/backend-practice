@@ -13,7 +13,6 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: __dirname + './../.env' })
 
 const key = process.env.SECRET;
-console.log(key);
 
 const emailSchema = zod.string().email();
 const passwordSchema = zod.string().min(8);
@@ -39,4 +38,28 @@ function signJwt(username, password) {
 }
 
 const user = signJwt("rishabh@gmail.com", "HelloWorld%444");
-console.log(user);
+console.log("token returned: "+user);
+
+
+// decode
+const decodeJwt = (token) => {
+    const decode = jwt.decode(token);
+    console.log(decode);
+}
+
+const decoded = decodeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJpc2hhYmhAZ21haWwuY29tIiwiaWF0IjoxNzEzMzc2NjcyfQ.nPGIqS8x_fRRRDpnSsNGVSaWaIfWii-lyGIqBBeXQv0");
+
+
+// verify
+function verifyJwt(token) {
+    let ans = true;
+    try {
+        const verify = jwt.verify(token, jwtPassword);
+        console.log("verify "+verify)
+    } catch(e) {
+        ans = false;
+    }
+    return ans;
+}
+const ans = verifyJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJpc2hhYmhAZ21haWwuY29tIiwiaWF0IjoxNzEzMzc2NjcyfQ.KEZHbJxyxXvTzdwVUfoPk7peg_qSAr_epSN0M11aKcg", key);
+console.log(ans)
