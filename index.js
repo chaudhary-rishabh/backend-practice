@@ -1,12 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import errorHandler from "./middleware/errorHandler"
+import connectDB from "./config/connectDB.js/"
 const app = express();
-
-
 dotenv.config();
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
+const DATABASE = process.env.DATABASE;
+const URI = process.env.URI;
+connectDB(URI, DATABASE);
 
 app.use(express.json());
 let errorCount = 0;
@@ -28,44 +30,36 @@ app.use(function (req, res, next) {
 	}
 })
 
-app.post("/", (req, res) => {
-	throw new Error("not valid details");
-	const newStudents = req.body;
-	students.push(newStudents);
-	res.status(201).send("successfully added new students");
-});
+// app.post("/", (req, res) => {
+// 	const newStudents = req.body;
+// 	students.push(newStudents);
+// 	res.status(201).send("successfully added new students");
+// });
 
-app.get("/students", (req, res) =>{
-	res.send("New addmited students are: "+ JSON.stringify(students));
-})
+// app.get("/students", (req, res) =>{
+// 	res.send("New addmited students are: "+ JSON.stringify(students));
+// })
 
-app.get("/students/:id", (req, res)=>{
-	const id = req.params.id;
-	res.send("Admision details of student with id "+id+" are: "+ JSON.stringify(students[id]));
-})
+// app.get("/students/:id", (req, res)=>{
+// 	const id = req.params.id;
+// 	res.send("Admision details of student with id "+id+" are: "+ JSON.stringify(students[id]));
+// })
 
-app.delete("/students/:id", function(req, res){
-	students.splice(req.params.id, 1);
-	res.send("deleted student number: "+req.params.id);
-	res.send("new student list after deleting student:- "+JSON.stringify(students));
-});
+// app.delete("/students/:id", function(req, res){
+// 	students.splice(req.params.id, 1);
+// 	res.send("deleted student number: "+req.params.id);
+// 	res.send("new student list after deleting student:- "+JSON.stringify(students));
+// });
 
-app.put("/students/:id", function(req, res){
-	const newStudent = req.body;
-	const id = req.params.id;
-	students[id] = newStudent
-	res.send("updated student number: "+req.params.id);
-	res.send("New Students list after updating students:- "+ JSON.stringify(students));
-})
+// app.put("/students/:id", function(req, res){
+// 	const newStudent = req.body;
+// 	const id = req.params.id;
+// 	students[id] = newStudent
+// 	res.send("updated student number: "+req.params.id);
+// 	res.send("New Students list after updating students:- "+ JSON.stringify(students));
+// })
 
-app.use(function (err, req, res, next) {
-	errorCount += 1
-	if (errorCount > 10) {
-		console.log(errorCount+" errors till now")
-	}
-	res.status(404).json({ msg: err.message });
-})
-
+app.use(errorHandler);
 app.listen(port, function(){
 	console.log("server started on port number: "+port);
 })
